@@ -1,0 +1,26 @@
+graph TD
+    User([User / Factory Manager]) --> NextJS[Next.js 15 Dashboard]
+    NextJS --> FastAPI[FastAPI Backend]
+    FastAPI --> LangGraph[LangGraph Agent Orchestrator]
+
+    subgraph Agent Society
+        LangGraph --> Exec[Executive Agent]
+        Exec <--> Prod[Production Agent]
+        Exec <--> Inv[Inventory Agent]
+        Exec <--> Proc[Procurement Agent]
+        Exec <--> Qual[Quality Agent]
+    end
+
+    subgraph Memory & Context
+        LangGraph <--> Mem[Memory Agent]
+        Mem <--> PgVector[(PostgreSQL + pgvector)]
+    end
+
+    subgraph External LLM
+        Exec <--> Qwen[Qwen Cloud APIs]
+        Prod <--> Qwen
+        Inv <--> Qwen
+        Proc <--> Qwen
+        Qual <--> Qwen
+        Mem <--> Qwen
+    end

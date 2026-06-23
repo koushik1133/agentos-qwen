@@ -1,0 +1,24 @@
+# Environment variables
+.env
+backend/.env
+frontend/.env
+*.env
+
+# Dependencies
+node_modules/
+backend/venv/
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+
+# Next.js build output
+frontend/.next/
+
+# Databases
+*.db
+backend/forgemind.db
+
+# OS Files
+.DS_Store
