@@ -45,24 +45,24 @@
 }
 
 :root {
-  --background: oklch(0.145 0 0); /* very dark grey/black */
-  --foreground: oklch(0.985 0 0); /* bright white */
-  --card: oklch(0.18 0 0 / 40%); /* semi-transparent for glassmorphism */
+  --background: oklch(0.13 0.015 260); /* Deep slate/indigo (Attio style) */
+  --foreground: oklch(0.985 0 0); /* Bright white */
+  --card: oklch(0.18 0.015 260 / 40%); /* Semi-transparent glass */
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.18 0 0 / 80%);
+  --popover: oklch(0.18 0.015 260 / 80%);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.145 0 0);
-  --secondary: oklch(0.269 0 0);
+  --primary: oklch(0.65 0.15 260); /* Indigo accent */
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.25 0.02 260);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0 / 50%);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0 / 50%);
+  --muted: oklch(0.25 0.02 260 / 50%);
+  --muted-foreground: oklch(0.7 0.02 260);
+  --accent: oklch(0.65 0.15 260 / 20%);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%); /* subtle white borders */
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --destructive: oklch(0.6 0.2 20);
+  --border: oklch(1 0 0 / 8%); /* Subtle borders */
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.65 0.15 260);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -93,5 +93,5 @@
 
 /* Glassmorphism utility */
 .glass {
-  @apply bg-card backdrop-blur-xl border border-white/5 shadow-2xl;
+  @apply bg-card backdrop-blur-2xl border border-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)];
 }

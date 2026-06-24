@@ -50,7 +50,7 @@ export default async function ProductionInsights() {
               </div>
               <ul className="space-y-4 relative z-10">
                 {data.recommendations.map((rec: any, i: number) => (
-                  <li key={i} className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl backdrop-blur-sm relative overflow-hidden">
+                  <li key={i} className="p-5 bg-blue-500/10 border border-blue-500/20 rounded-2xl backdrop-blur-sm relative overflow-hidden transition-all duration-300 hover:shadow-[0_8px_32px_rgba(59,130,246,0.15)] hover:-translate-y-1">
                     <div className="absolute top-0 left-0 w-1 h-full bg-blue-500/50" />
                     <span className="font-heading font-semibold text-blue-200 block mb-2">{rec.title}</span>
                     <span className="text-white/70 block text-sm leading-relaxed">{rec.description}</span>

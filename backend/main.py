@@ -3,7 +3,7 @@ load_dotenv()
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database import engine
-from models import Base, WorkflowLog, Memory
+from models import Base, WorkflowLog, Memory, AgentMessage
 from pydantic import BaseModel
 from graph import app_graph
 from langchain_core.messages import HumanMessage
@@ -54,13 +54,22 @@ def log_workflow_to_db(workflow_id: str, details: dict):
     finally:
         db.close()
 
+def log_agent_message_to_db(workflow_id: str, sender: str, content: str):
+    db = SessionLocal()
+    try:
+        db_msg = AgentMessage(workflow_id=workflow_id, sender=sender, receiver="System", content=content)
+        db.add(db_msg)
+        db.commit()
+    finally:
+        db.close()
+
 @app.post("/api/workflow")
 async def run_workflow(request: WorkflowRequest):
     workflow_id = str(uuid.uuid4())
     
     async def event_generator():
         inputs = {"messages": [HumanMessage(content=request.message)]}
-        yield f"data: {json.dumps({'message': request.message})}\n\n"
+        yield f"data: {json.dumps({'message': request.message, 'workflow_id': workflow_id})}\n\n"
         
         agents_involved = []
         try:
@@ -71,9 +80,13 @@ async def run_workflow(request: WorkflowRequest):
                         agent_title = node_name.capitalize()
                         if agent_title not in agents_involved:
                             agents_involved.append(agent_title)
+                        
+                        log_agent_message_to_db(workflow_id, agent_title, latest_msg)
                         yield f"data: {json.dumps({'message': latest_msg})}\n\n"
         except Exception as e:
-            yield f"data: {json.dumps({'message': f'System halted due to safety limit: {str(e)}'})}\n\n"
+            error_msg = f'System halted due to safety limit: {str(e)}'
+            log_agent_message_to_db(workflow_id, "System", error_msg)
+            yield f"data: {json.dumps({'message': error_msg})}\n\n"
             
         details = {
             "query": request.message,
@@ -92,7 +105,8 @@ from sqlalchemy import desc
 
 @app.get("/api/metrics")
 def get_metrics(db: Session = Depends(get_db)):
-    total_workflows = db.query(WorkflowLog).count()
+    actual_workflows = db.query(WorkflowLog).count()
+        
     recent_logs = db.query(WorkflowLog).order_by(desc(WorkflowLog.created_at)).limit(3).all()
     
     recent_actions = []
@@ -116,10 +130,10 @@ def get_metrics(db: Session = Depends(get_db)):
         })
 
     return {
-        "active_workflows": total_workflows,
-        "agreement_score": 98,
-        "cost_reduction": total_workflows * 1250, # Arbitrary scaling for demo
-        "recent_actions": recent_actions if recent_actions else [{"action": "System Initialized", "time": "Just now"}]
+        "active_workflows": actual_workflows,
+        "active_agents": 4,
+        "system_status": "Optimal",
+        "recent_actions": recent_actions if recent_actions else [{"action": "System Initialized. Awaiting commands.", "time": "Just now"}]
     }
 
 @app.get("/api/history")
@@ -149,53 +163,80 @@ def get_history(db: Session = Depends(get_db)):
 
 @app.get("/api/memories")
 def get_memories(query: str = "", db: Session = Depends(get_db)):
-    # Mock fallback, but eventually read from Memory table
-    # Since we aren't logging memories yet, return a mix of DB and mock
-    logs = db.query(WorkflowLog).order_by(desc(WorkflowLog.created_at)).limit(5).all()
+    logs = db.query(WorkflowLog).order_by(desc(WorkflowLog.created_at)).limit(10).all()
     memories = []
     for log in logs:
         memories.append({
             "title": f"Workflow Memory ({log.workflow_id[:6]})",
             "importance": 0.95,
-            "description": f"Processed a query: '{log.details.get('query', '')[:50]}...'",
+            "description": f"Processed a query: '{log.details.get('query', '')[:80]}...'",
             "metadata": f"{log.created_at.strftime('%b %d, %Y')} - Agents: {log.details.get('agents', '')}"
         })
-        
-    if not memories:
-        memories = [
-            {
-                "title": "Initial Setup Memory",
-                "importance": 1.0,
-                "description": "ForgeMind AI OS initialized. Awaiting commands.",
-                "metadata": "System Genesis"
-            }
-        ]
     return memories
 
 @app.get("/api/workflows/{workflow_id}")
-def get_workflow_details(workflow_id: str):
-    # Mock data for Agent Collaboration Viewer
-    return [
-        {"agent": "Executive Agent", "color": "blue", "message": "Received alert: Production delay on Line A. Requesting analysis from Production Agent."},
-        {"agent": "Production Agent", "color": "orange", "message": "Analyzed schedule. Bottleneck is due to part shortage. Suggesting Inventory check."},
-        {"agent": "Inventory Agent", "color": "green", "message": "Part #1042 is below safety stock. Triggering Procurement workflow."},
-        {"agent": "Procurement Agent", "color": "purple", "message": "Comparing suppliers. Supplier X has 2-day delivery. Supplier Y has 5-day delivery but cheaper. Voting for Supplier X to prevent further delay."},
-        {"agent": "Executive Agent", "color": "blue", "message": "Vote accepted. Approved PO for Supplier X. Logging decision to Memory Agent."}
-    ]
+def get_workflow_details(workflow_id: str, db: Session = Depends(get_db)):
+    messages = db.query(AgentMessage).filter(AgentMessage.workflow_id == workflow_id).order_by(AgentMessage.created_at).all()
+    
+    colors = {
+        "Executive": "blue",
+        "Production": "orange",
+        "Inventory": "green",
+        "Procurement": "purple",
+        "Quality": "red",
+        "System": "slate"
+    }
+    
+    result = []
+    for msg in messages:
+        agent_name = msg.sender
+        if not agent_name.endswith("Agent") and agent_name != "System":
+            agent_name = agent_name + " Agent"
+            
+        color = colors.get(msg.sender, "slate")
+        result.append({
+            "agent": agent_name,
+            "color": color,
+            "message": msg.content
+        })
+        
+    if not result:
+        # Fallback if ID doesn't exist
+        return [{"agent": "System", "color": "slate", "message": "No trace found for this workflow."}]
+        
+    return result
 
 @app.get("/api/production")
-def get_production_insights():
-    return {
-        "bottlenecks": [
-            {"line": "Line A - Assembly", "status": "Delayed (Part Shortage)", "severity": "high"},
-            {"line": "Line C - Quality Check", "status": "At Capacity", "severity": "medium"}
-        ],
-        "recommendations": [
-            {
-                "title": "Schedule Shift",
-                "description": "Production Agent recommends shifting Line C workers to Line B during downtime.",
-                "confidence": 92,
-                "status": "Pending Exec Approval"
-            }
+def get_production_insights(db: Session = Depends(get_db)):
+    recent_logs = db.query(WorkflowLog).order_by(desc(WorkflowLog.created_at)).limit(5).all()
+    
+    bottlenecks = []
+    recommendations = []
+    
+    for log in recent_logs:
+        query = log.details.get("query", "").lower()
+        if "delay" in query or "shortage" in query or "rush" in query:
+            bottlenecks.append({
+                "line": f"Workflow {log.workflow_id[:6]}",
+                "status": "Capacity Alert",
+                "severity": "high"
+            })
+            recommendations.append({
+                "title": "Shift Reallocation",
+                "description": f"Based on recent query: {query[:60]}... Autonomous agents have been engaged.",
+                "confidence": 95,
+                "status": "Executed"
+            })
+            
+    if not bottlenecks:
+        bottlenecks = [
+            {"line": "Line A - Assembly", "status": "Operating Normally", "severity": "low"}
         ]
+        recommendations = [
+            {"title": "Routine Maintenance", "description": "No critical bottlenecks detected. Scheduled maintenance on Line B.", "confidence": 99, "status": "Scheduled"}
+        ]
+        
+    return {
+        "bottlenecks": bottlenecks,
+        "recommendations": recommendations
     }

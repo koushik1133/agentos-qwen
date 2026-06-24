@@ -6,7 +6,7 @@ import { LayoutDashboard, Users, Brain, Activity, Clock } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 const navItems = [
-  { href: "/", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/collaboration", label: "Agent Collab", icon: Users },
   { href: "/production", label: "Production", icon: Activity },
   { href: "/memory", label: "Memory", icon: Brain },

@@ -42,11 +42,11 @@ export default async function CollaborationViewer() {
                 const colorStyle = agentColors[msg.agent] || "from-white/10 to-white/5 border-white/10 text-white/90";
                 
                 return (
-                  <div key={i} className={`flex flex-col space-y-2 ${isRight ? 'items-end' : 'items-start'}`}>
-                    <span className="font-heading font-semibold text-white/60 text-sm tracking-wide uppercase px-1">
+                  <div key={i} className={`flex flex-col space-y-2 group ${isRight ? 'items-end' : 'items-start'}`}>
+                    <span className="font-heading font-semibold text-white/60 text-sm tracking-wide uppercase px-1 transition-colors group-hover:text-white/80">
                       {msg.agent}
                     </span>
-                    <div className={`bg-gradient-to-br ${colorStyle} p-4 rounded-2xl border backdrop-blur-md max-w-[85%] text-sm leading-relaxed shadow-lg`}>
+                    <div className={`bg-gradient-to-br ${colorStyle} p-4 rounded-2xl border backdrop-blur-md max-w-[85%] text-sm leading-relaxed shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}>
                       {msg.message}
                     </div>
                   </div>

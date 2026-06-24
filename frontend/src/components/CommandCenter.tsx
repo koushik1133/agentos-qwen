@@ -91,6 +91,23 @@ export default function CommandCenter() {
           )}
         </AnimatePresence>
 
+        <div className="flex flex-wrap gap-2 mb-4">
+          {[
+            "A storm delayed shipments from Supplier Alpha. Source backups.",
+            "Machine B in Assembly Line 2 is detecting a 5% deviation.",
+            "We received a rush order for 5,000 extra units due Friday."
+          ].map((prompt, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setInput(prompt)}
+              className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white transition-colors text-left"
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
+
         <form onSubmit={handleSubmit} className="relative group">
           <input
             type="text"
