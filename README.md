@@ -37,4 +37,29 @@ Built for the **Global AI Hackathon Series with Qwen Cloud** under the **Agent S
 4. Access the Frontend at `http://localhost:3000` and the Backend API at `http://localhost:8000`
 
 ## Architecture
-See `architecture.mermaid` for the full system design.
+
+```mermaid
+graph TD
+    A[User / Dashboard] -->|Command| B(Executive Agent)
+    
+    subgraph Multi-Agent Swarm
+    B <--> C(Production Agent)
+    B <--> D(Inventory Agent)
+    B <--> E(Procurement Agent)
+    B <--> F(Quality Agent)
+    end
+    
+    C <--> G[(SQLite / Memory)]
+    D <--> G
+    E <--> G
+    F <--> G
+    
+    B -->|Final Decision| H[Frontend OS Trace]
+```
+
+### How it Works (Track 3: Agent Society)
+When a complex manufacturing issue occurs (e.g., a storm delays microchip shipments), the **Executive Agent** intercepts the problem and triggers the swarm. 
+- The **Inventory Agent** analyzes current stock and predicts a shortage.
+- The **Procurement Agent** evaluates alternative suppliers for backup components.
+- The **Production Agent** adjusts the assembly line schedule to prevent downtime.
+All agents communicate via a secure LangGraph state, resolving conflicts autonomously before presenting the final remediation plan to the user.
