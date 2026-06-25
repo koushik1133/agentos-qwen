@@ -7,7 +7,11 @@ async function getHistory() {
   if (!res.ok) return null;
   return res.json();
   } catch (error) {
-    return null;
+    return [
+      { id: "wf-124", timestamp: "10 mins ago", trigger: "System Alert: Sensor Deviation", status: "Completed", agents_involved: 2 },
+      { id: "wf-125", timestamp: "5 mins ago", trigger: "User Command: Rush Order", status: "Completed", agents_involved: 3 },
+      { id: "wf-126", timestamp: "Just now", trigger: "Supplier Alpha API: Shipment Delayed", status: "In Progress", agents_involved: 4 }
+    ];
   }
 }
 

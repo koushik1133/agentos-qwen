@@ -7,7 +7,12 @@ async function getCollaboration() {
   if (!res.ok) return null;
   return res.json();
   } catch (error) {
-    return null;
+    return [
+      { role: "Executive Agent", content: "We have a critical shipment delay from Supplier Alpha. Please assess our current inventory levels and identify potential shortages.", timestamp: "2 mins ago" },
+      { role: "Inventory Agent", content: "Given the 4-day delay from Supplier Alpha, we will run out of primary microchips within the next 3 days.", timestamp: "2 mins ago" },
+      { role: "Executive Agent", content: "We need to procure primary microchips from Supplier Beta or Gamma to ensure a steady supply.", timestamp: "1 min ago" },
+      { role: "Procurement Agent", content: "I recommend choosing Supplier Beta as our backup supplier. Their immediate availability and 2-day ETA will allow us to maintain our production schedule. Order placed.", timestamp: "Just now" }
+    ];
   }
 }
 

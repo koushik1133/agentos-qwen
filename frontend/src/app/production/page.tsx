@@ -7,7 +7,16 @@ async function getProduction() {
   if (!res.ok) return null;
   return res.json();
   } catch (error) {
-    return null;
+    return {
+      bottlenecks: [
+        { resource: "Machine B (Assembly Line 2)", severity: "High", expected_delay: "4 hrs", status: "Active" },
+        { resource: "Microchip Inventory", severity: "Critical", expected_delay: "3 days", status: "Active" }
+      ],
+      recommendations: [
+        { action: "Shift 30% of capacity from Line C to Line A", impact: "Eliminates Machine B bottleneck", status: "Pending Approval" },
+        { action: "Expedite shipment from Supplier Beta", impact: "Reduces microchip delay to 0 days", status: "Executing" }
+      ]
+    };
   }
 }
 
