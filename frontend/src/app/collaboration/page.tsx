@@ -2,9 +2,13 @@ import Navigation from '@/components/Navigation'
 import { MessagesSquare } from 'lucide-react'
 
 async function getCollaboration() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/workflows/123`, { cache: 'no-store' });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/workflows/123`, { cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
+  } catch (error) {
+    return null;
+  }
 }
 
 const agentColors: Record<string, string> = {

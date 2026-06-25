@@ -2,9 +2,13 @@ import Navigation from '@/components/Navigation'
 import { Brain, Search, Database } from 'lucide-react'
 
 async function getMemories() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/memories`, { cache: 'no-store' });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/memories`, { cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
+  } catch (error) {
+    return null;
+  }
 }
 
 export default async function MemoryExplorer() {

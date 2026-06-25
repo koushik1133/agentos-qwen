@@ -2,9 +2,13 @@ import Navigation from '@/components/Navigation'
 import { Clock, CheckCircle2, Loader2 } from 'lucide-react'
 
 async function getHistory() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/history`, { cache: 'no-store' });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/history`, { cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
+  } catch (error) {
+    return null;
+  }
 }
 
 export default async function ExecutionHistory() {

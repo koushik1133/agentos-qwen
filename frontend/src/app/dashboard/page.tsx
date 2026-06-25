@@ -3,9 +3,13 @@ import CommandCenter from '@/components/CommandCenter'
 import { Activity, Users, CheckCircle, Clock } from 'lucide-react'
 
 async function getMetrics() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/metrics`, { cache: 'no-store' });
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/metrics`, { cache: 'no-store' });
   if (!res.ok) return null;
   return res.json();
+  } catch (error) {
+    return null;
+  }
 }
 
 export default async function Home() {
