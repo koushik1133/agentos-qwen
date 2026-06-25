@@ -45,19 +45,19 @@
 }
 
 :root {
-  --background: oklch(0.13 0.015 260); /* Deep slate/indigo (Attio style) */
+  --background: oklch(0.17 0.0 0); /* Attio Dark Background (#0d0e10) */
   --foreground: oklch(0.985 0 0); /* Bright white */
-  --card: oklch(0.18 0.015 260 / 40%); /* Semi-transparent glass */
+  --card: oklch(0.22 0.0 0 / 40%); /* Semi-transparent glass */
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.18 0.015 260 / 80%);
+  --popover: oklch(0.22 0.0 0 / 80%);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.65 0.15 260); /* Indigo accent */
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.25 0.02 260);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.25 0.02 260 / 50%);
-  --muted-foreground: oklch(0.7 0.02 260);
-  --accent: oklch(0.65 0.15 260 / 20%);
+  --primary: oklch(0.74 0.12 186); /* Attio Signature Teal (#3abdaf) */
+  --primary-foreground: oklch(0.17 0.0 0);
+  --secondary: oklch(0.81 0.14 135); /* Attio Light Green (#8bc269) */
+  --secondary-foreground: oklch(0.17 0.0 0);
+  --muted: oklch(0.28 0.0 0 / 50%);
+  --muted-foreground: oklch(0.7 0.0 0);
+  --accent: oklch(0.74 0.12 186 / 20%);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.6 0.2 20);
   --border: oklch(1 0 0 / 8%); /* Subtle borders */
