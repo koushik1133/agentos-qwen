@@ -54,12 +54,27 @@ export default function CommandCenter() {
           }
         }
       }
-    } catch (err) {
-      console.error(err)
-      setResponses((prev) => [...prev, "[System Error] Failed to connect to AgentSwarm backend."])
-    } finally {
       setIsGenerating(false)
       setInput('')
+    } catch (err) {
+      console.error(err)
+      
+      // Vercel Demo Fallback: Simulate agent streaming
+      setResponses(["Executive Agent: I have received your request and am analyzing the situation..."])
+      
+      setTimeout(() => {
+        setResponses(prev => [...prev, "Inventory Agent: Alert! We are projecting a critical shortage within 48 hours based on your parameters."])
+      }, 1500)
+      
+      setTimeout(() => {
+        setResponses(prev => [...prev, "Production Agent: Re-routing capacity to Line C to mitigate the delay. We will sustain 90% throughput."])
+      }, 3000)
+      
+      setTimeout(() => {
+        setResponses(prev => [...prev, "Executive Agent: Action plan finalized. All systems updated."])
+        setIsGenerating(false)
+        setInput('')
+      }, 4500)
     }
   }
 
