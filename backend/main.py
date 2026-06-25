@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime, timezone
 
 app = FastAPI(
-    title="ForgeMind AI API",
+    title="AgentSwarm AI API",
     description="Multi-agent manufacturing operating system powered by Qwen Cloud",
     version="1.0.0",
 )
@@ -31,7 +31,7 @@ def on_startup():
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to ForgeMind AI API"}
+    return {"message": "Welcome to AgentSwarm AI API"}
 
 @app.get("/health")
 def health_check():

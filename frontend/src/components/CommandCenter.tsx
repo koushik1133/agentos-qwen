@@ -56,7 +56,7 @@ export default function CommandCenter() {
       }
     } catch (err) {
       console.error(err)
-      setResponses((prev) => [...prev, "[System Error] Failed to connect to ForgeMind backend."])
+      setResponses((prev) => [...prev, "[System Error] Failed to connect to AgentSwarm backend."])
     } finally {
       setIsGenerating(false)
       setInput('')

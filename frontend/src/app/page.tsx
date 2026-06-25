@@ -15,7 +15,7 @@ export default function LandingPage() {
         <header className="text-center mb-24 max-w-4xl mx-auto mt-12">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-medium text-white/80 tracking-wide uppercase">Introducing ForgeMind OS</span>
+            <span className="text-sm font-medium text-white/80 tracking-wide uppercase">Introducing AgentSwarm OS</span>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-heading font-bold text-white tracking-tight leading-tight mb-8">
@@ -26,7 +26,7 @@ export default function LandingPage() {
           </h1>
           
           <p className="text-xl text-white/60 leading-relaxed mb-12 max-w-2xl mx-auto">
-            Stop reacting to supply chain bottlenecks. ForgeMind uses a swarm of autonomous AI agents to proactively monitor, analyze, and resolve production issues in real-time.
+            Stop reacting to supply chain bottlenecks. AgentSwarm uses a swarm of autonomous AI agents to proactively monitor, analyze, and resolve production issues in real-time.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

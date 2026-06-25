@@ -20,7 +20,7 @@ export default function Navigation() {
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 glass rounded-full px-6 py-3 flex items-center gap-8">
       <div className="flex items-center gap-2 pr-6 border-r border-white/10">
         <div className="w-3 h-3 rounded-full bg-white animate-pulse" />
-        <span className="font-heading font-bold text-white tracking-wider text-lg">ForgeMind</span>
+        <span className="font-heading font-bold text-white tracking-wider text-lg">AgentSwarm</span>
       </div>
       
       <div className="flex items-center gap-6">

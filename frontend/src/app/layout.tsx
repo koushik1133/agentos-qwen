@@ -13,7 +13,7 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "ForgeMind AI",
+  title: "AgentSwarm AI",
   description: "Multi-agent manufacturing operating system powered by Qwen Cloud",
 };
 

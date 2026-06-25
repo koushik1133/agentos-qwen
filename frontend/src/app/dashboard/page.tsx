@@ -19,7 +19,7 @@ export default async function Home() {
         <header className="mb-12">
           <h1 className="text-4xl md:text-5xl font-heading font-bold text-white tracking-tight">Executive Overview</h1>
           <p className="text-white/70 mt-3 text-lg max-w-3xl leading-relaxed">
-            Welcome to ForgeMind! This is an autonomous AI operating system designed for manufacturing. 
+            Welcome to AgentSwarm! This is an autonomous AI operating system designed for manufacturing. 
             When you type a scenario into the Command Center below, multiple AI agents (like Production, Inventory, and Procurement) 
             will securely collaborate in the background to solve your problem in real-time.
           </p>

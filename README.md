@@ -1,6 +1,6 @@
-# ForgeMind AI 🏭🧠
+# AgentSwarm AI 🏭🧠
 
-ForgeMind AI is a multi-agent manufacturing operating system powered by Qwen Cloud. It enables specialized AI agents to collaborate, negotiate, and execute complex business workflows autonomously.
+AgentSwarm AI is a multi-agent manufacturing operating system powered by Qwen Cloud. It enables specialized AI agents to collaborate, negotiate, and execute complex business workflows autonomously.
 
 Built for the **Global AI Hackathon Series with Qwen Cloud** under the **Agent Society** track.
 
