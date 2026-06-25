@@ -1,6 +1,6 @@
 # AgentSwarm AI 🏭🧠
 
-AgentSwarm AI is a multi-agent manufacturing operating system powered by Qwen Cloud. It enables specialized AI agents to collaborate, negotiate, and execute complex business workflows autonomously.
+An autonomous AI operating system that deploys a multi-agent swarm to proactively resolve manufacturing & supply chain bottlenecks in real-time.
 
 Built for the **Global AI Hackathon Series with Qwen Cloud** under the **Agent Society** track.
 
